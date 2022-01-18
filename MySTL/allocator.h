@@ -1,5 +1,5 @@
-﻿#ifndef MYTINYSTL_ALLOCATOR_H_
-#define MYTINYSTL_ALLOCATOR_H_
+#ifndef MYSTL_ALLOCATOR_H_
+#define MYSTL_ALLOCATOR_H_
 
 // 这个头文件包含一个模板类 allocator，用于管理内存的分配、释放，对象的构造、析构
 
@@ -45,7 +45,7 @@ T* allocator<T>::allocate(size_type n)
 	if (n == 0) {
 	    return nullptr;
 	}
-  	// 通过new申请所需空间并用static_cast转换为所需类型
+  	// 通过operator new（不是new）申请所需空间并用static_cast转换为所需类型
   	return static_cast<T*>(::operator new(n * sizeof(T)));
 }
 
@@ -56,7 +56,7 @@ void allocator<T>::deallocate(T* ptr, size_type n /*size*/)
   	if (ptr == nullptr) {
     	return;
    	}
-  	// 通过delete释放指针
+  	// 通过operator delete(不是delete)释放指针
   	::operator delete(ptr);
 }
 
@@ -98,5 +98,6 @@ void allocator<T>::destroy(T* first, T* last)
 }
 
 } // namespace mystl
-#endif // !MYTINYSTL_ALLOCATOR_H_
+#endif // !MYSTL_ALLOCATOR_H_
+
 
